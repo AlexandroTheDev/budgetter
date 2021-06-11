@@ -1,14 +1,20 @@
 import RecordContextProvider from './context/RecordContext';
 import './App.scss';
+import MainNavbar from './components/layout/MainNavbar';
+import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
+import Home from './pages/Home';
 
 function App() {
   return (
     <RecordContextProvider>
-
-      <div className="App">
-        <h1>Header Typography test</h1>
-        body typhography test
-      </div>
+      <Router>
+        <div className="App">
+          <MainNavbar/>
+          <Switch>
+            <Route path="/" exact component={Home} />
+          </Switch>
+        </div>
+      </Router>
     </RecordContextProvider>
   );
 }
