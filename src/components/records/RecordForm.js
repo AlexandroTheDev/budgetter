@@ -1,8 +1,14 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { Form, Button, InputGroup} from "react-bootstrap"
+import { RecordContext } from "../../context/RecordContext"
+
+
 export default function RecordForm() {
+
+    const recordContext = useContext(RecordContext)
+
     const [record, setRecord] = useState({
-        amount: 0,
+        amount: "",
         type: "",
         category: ""
     })
@@ -11,6 +17,12 @@ export default function RecordForm() {
     
     const handleSubmit = e =>{
         e.preventDefault()
+        recordContext.addRecord(record)
+        setRecord({
+            amount: "",
+            type: "",
+            category: ""
+        })
     }
 
     return (
@@ -29,7 +41,7 @@ export default function RecordForm() {
             <Form.Group controlId="category">
                 <Form.Label>Category:</Form.Label>
                 <Form.Control onChange={handleChange} value={record.category} as="select" required>
-                    <option disabled>Select</option>
+                    <option disabled value="">Select</option>
                     <option value="id1">id1</option>
                     <option value="id2">id2</option>
                     <option value="id3">id3</option>
@@ -39,6 +51,7 @@ export default function RecordForm() {
             <Form.Group controlId="type">
                 <Form.Label>Type:</Form.Label>
                 <Form.Control onChange={handleChange} value={record.type} as="select" required>
+                    <option disabled value="">Select</option>
                     <option value="income">Income</option>
                     <option value="expense">Expense</option>
                 </Form.Control>

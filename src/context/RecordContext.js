@@ -1,5 +1,6 @@
 import { useReducer, createContext } from "react"
 import recordReducer from './recordReducer'
+import {v4} from 'uuid'
 
 export const RecordContext = createContext()
 
@@ -60,9 +61,16 @@ export default function RecordContextProvider(props) {
 
     const [state, dispatch] = useReducer(recordReducer, initialState)
 
+    // Add Record
+    const addRecord = record => {
+        record.id = v4()
+        dispatch({ type: "ADD_RECORD", payload: record})
+    }
+
     return(
         <RecordContext.Provider value={{
-            records: state.records
+            records: state.records,
+            addRecord
         }}>
             {props.children}
         </RecordContext.Provider>
