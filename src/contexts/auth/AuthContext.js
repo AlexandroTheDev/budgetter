@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useReducer, createContext } from "react";
+import { REGISTER_FAIL, REGISTER_SUCCESS } from "../types";
 import authReducer from './authReducer';
 
 export const AuthContext = createContext()
@@ -28,13 +29,13 @@ const AuthContextProvider = (props) => {
         axios.post(`${process.env.REACT_APP_BE}/api/users`, credentials, config)
         .then( res => {
             dispatch({
-                type: "REGISTER_SUCCESS",
+                type: REGISTER_SUCCESS,
                 payload: res.data
             })
         })
         .catch( err =>{
             dispatch({
-                type: "REGISTER_FAIL",
+                type: REGISTER_FAIL,
                 payload: err.response.data.error.message
             })
         })

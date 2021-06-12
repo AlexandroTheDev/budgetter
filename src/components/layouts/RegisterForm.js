@@ -1,10 +1,12 @@
 import { useContext, useState } from 'react'
 import { Col, Form, Button } from 'react-bootstrap'
+import { AlertContext } from '../../contexts/alert/AlertContext'
 import { AuthContext } from '../../contexts/auth/AuthContext'
 
 export default function RegisterForm() {
 
     const {register} = useContext(AuthContext)
+    const {setAlert} = useContext(AlertContext)
 
     const [credentials, setcredentials ] = useState({
         firstName: "",
@@ -14,11 +16,21 @@ export default function RegisterForm() {
         confirmPassword: ""
     })
 
+    const { password, confirmPassword, firstName, lastName, email} = credentials
+
     const handleChange = e => setcredentials({...credentials, [e.target.id] : e.target.value})
 
     const handleSubmit = e => {
         e.preventDefault()
-        register(credentials)
+        if(firstName === '' || lastName === '' || email === '') {
+            setAlert("Incomplete Fields", "danger")
+        } else if(password.length < 8 ){
+            setAlert("Password must be atleast 8 characters")
+        } else if( password !== confirmPassword){
+            setAlert("Passwords do not matched", "danger")
+        } else {    
+            register(credentials)
+        }
     }
 
     return (
