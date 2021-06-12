@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useContext, useState } from 'react'
 import { Col, Form, Button } from 'react-bootstrap'
 import { AlertContext } from '../../contexts/alert/AlertContext'
@@ -5,7 +6,7 @@ import { AuthContext } from '../../contexts/auth/AuthContext'
 
 export default function RegisterForm() {
 
-    const {register} = useContext(AuthContext)
+    const {register, error, clearErrors} = useContext(AuthContext)
     const {setAlert} = useContext(AlertContext)
 
     const [credentials, setcredentials ] = useState({
@@ -15,6 +16,13 @@ export default function RegisterForm() {
         password: "",
         confirmPassword: ""
     })
+
+    useEffect(() =>{
+        if(error === "Email address already in use"){
+            setAlert(error,'danger')
+            clearErrors()
+        }
+    },[error])
 
     const { password, confirmPassword, firstName, lastName, email} = credentials
 

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useReducer, createContext } from "react";
-import { REGISTER_FAIL, REGISTER_SUCCESS } from "../types";
+import { CLEAR_ERRORS, REGISTER_FAIL, REGISTER_SUCCESS } from "../types";
 import authReducer from './authReducer';
 
 export const AuthContext = createContext()
@@ -46,6 +46,9 @@ const AuthContextProvider = (props) => {
     // Logout
 
     // Clear Errors
+    const clearErrors = () => dispatch({
+        type: CLEAR_ERRORS
+    })
 
     return(
         <AuthContext.Provider value={{
@@ -55,6 +58,7 @@ const AuthContextProvider = (props) => {
             loading: state.loading,
             error: state.error,
             register,
+            clearErrors
         }}>
             {props.children}
         </AuthContext.Provider>
