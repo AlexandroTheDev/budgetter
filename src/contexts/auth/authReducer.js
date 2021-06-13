@@ -1,4 +1,4 @@
-import { CLEAR_ERRORS, REGISTER_FAIL, REGISTER_SUCCESS } from "../types"
+import { AUTH_ERROR, CLEAR_ERRORS, REGISTER_FAIL, REGISTER_SUCCESS, USER_LOADED } from "../types"
 
 
 export default (state, action) => {
@@ -25,6 +25,22 @@ export default (state, action) => {
             return {
                 ...state,
                 error: null
+            }
+        case USER_LOADED:
+            return {
+                ...state,
+                isAuthenticated: true,
+                loading: false,
+                ...action.payload
+            }
+        case AUTH_ERROR:
+            return {
+                ...state,
+                token: null,
+                isAuthenticated: false,
+                loading: false,
+                user:null,
+                error: action.payload
             }
         default:
             return state;

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useReducer, createContext } from "react";
-import { CLEAR_ERRORS, REGISTER_FAIL, REGISTER_SUCCESS } from "../types";
+import setAuthToken from "../../utils/setAuthToken";
+import { AUTH_ERROR, CLEAR_ERRORS, REGISTER_FAIL, REGISTER_SUCCESS, USER_LOADED } from "../types";
 import authReducer from './authReducer';
 
 export const AuthContext = createContext()
@@ -18,6 +19,26 @@ const AuthContextProvider = (props) => {
     const [state, dispatch] = useReducer(authReducer, initialState)
 
     // Load User
+    const loadUser = () =>{
+        if(localStorage.token) {
+            setAuthToken(localStorage.token)
+        }
+
+        axios.get(`${process.env.REACT_APP_BE}/api/auth`)
+        .then( res => {
+            dispatch({
+                type: USER_LOADED,
+                payload: res.data
+            })
+
+        })
+        .catch( err => {
+            dispatch({
+                type: AUTH_ERROR,
+                payload: err.response.data.error.message
+            })
+        })
+    }
 
     // Register User
     const register = credentials =>{
@@ -28,10 +49,13 @@ const AuthContextProvider = (props) => {
         }
         axios.post(`${process.env.REACT_APP_BE}/api/users`, credentials, config)
         .then( res => {
+            
             dispatch({
                 type: REGISTER_SUCCESS,
                 payload: res.data
             })
+            
+            loadUser()
         })
         .catch( err =>{
             dispatch({

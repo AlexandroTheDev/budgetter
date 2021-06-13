@@ -5,6 +5,11 @@ import MainNav from './components/layouts/MainNav'
 import Register from './components/pages/Register';
 import AlertContextProvider from './contexts/alert/AlertContext';
 import Alerts from './components/layouts/Alerts';
+import setAuthToken from './utils/setAuthToken';
+
+if(localStorage.token) {
+  setAuthToken(localStorage.token)
+}
 
 function App() {
   return (
