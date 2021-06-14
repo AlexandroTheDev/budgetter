@@ -1,11 +1,16 @@
+import { useEffect } from "react"
 import { useContext } from "react"
 import { useState } from "react"
 import { Form, Button } from "react-bootstrap"
+import { useHistory } from "react-router-dom"
 import { AlertContext } from "../../contexts/alert/AlertContext"
+import { AuthContext } from "../../contexts/auth/AuthContext"
 
 export default function LoginForm() {
 
     const {setAlert} = useContext(AlertContext)
+    const { loginUser, error, isAuthenticated, clearError } = useContext(AuthContext);
+    const history = useHistory()
 
     const [credentials, setCredentials] = useState({
         email: "",
@@ -18,10 +23,19 @@ export default function LoginForm() {
 
     const handleSubmit = e => {
         e.preventDefault()
-        
-        setAlert("Login Successful", "success")
-
+        loginUser(credentials)
     }
+    
+    useEffect(() => {
+        if(isAuthenticated) {
+            setAlert("Login Successful", "success")
+            history.push('/')
+        }
+        if(error) {
+            setAlert(error, 'danger')
+        }
+        clearError()
+    }, [error,isAuthenticated])
 
     return (
         <Form onSubmit={handleSubmit}>
