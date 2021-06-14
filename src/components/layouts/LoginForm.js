@@ -19,6 +19,7 @@ export default function LoginForm() {
     const handleSubmit = e => {
         e.preventDefault()
         
+        setAlert("Login Successful", "success")
 
     }
 
