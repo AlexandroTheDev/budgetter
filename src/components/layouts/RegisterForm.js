@@ -26,7 +26,6 @@ export default function RegisterForm() {
             clearError()
         }
         if(isAuthenticated) {
-            console.log("test")
             setAlert('Registration successfull','success')
             history.push('/')
         }

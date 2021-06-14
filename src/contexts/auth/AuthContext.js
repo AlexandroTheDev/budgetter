@@ -3,7 +3,7 @@ import { useReducer } from "react";
 import { useEffect } from "react";
 import { createContext } from "react";
 import setAuthToken from "../../utils/setAuthToken";
-import { REGISTER_USER, REGISTER_FAIL, CLEAR_REGISTER_ERROR, LOAD_USER, LOAD_USER_ERROR, LOGIN_USER, LOGIN_USER_FAIL } from "../types";
+import { REGISTER_USER, REGISTER_FAIL, CLEAR_REGISTER_ERROR, LOAD_USER, LOAD_USER_ERROR, LOGIN_USER, LOGIN_USER_FAIL, LOGOUT_USER } from "../types";
 import authReducer from "./authReducer";
 
 export const AuthContext = createContext()
@@ -50,7 +50,6 @@ export default function AuthContextProvider(props) {
         }
         axios.post(`${process.env.REACT_APP_BE}/api/users`, user, config)
         .then( res => {
-            console.log(res.data)
             dispatch({
                 type: REGISTER_USER,
                 payload: res.data
@@ -59,7 +58,6 @@ export default function AuthContextProvider(props) {
             loadUser()
         })
         .catch( err => {
-            console.log(err.response.data.error.message)
             dispatch({
                 type: REGISTER_FAIL,
                 payload: err.response.data.error.message
@@ -87,7 +85,7 @@ export default function AuthContextProvider(props) {
                 type: LOGIN_USER,
                 payload: res.data
             })
-            
+
             loadUser()
         })
         .catch( err => {
@@ -100,6 +98,9 @@ export default function AuthContextProvider(props) {
 
     }
 
+    // Logout User
+    const logoutUser = () => dispatch({type: LOGOUT_USER})
+
     useEffect(() => {
         loadUser()
     }, [])
@@ -110,7 +111,9 @@ export default function AuthContextProvider(props) {
             clearError,
             isAuthenticated: state.isAuthenticated,
             user: state.user,
-            loginUser
+            loginUser,
+            logoutUser,
+            isLoading: state.isLoading
         }}>
             {props.children}
         </AuthContext.Provider>

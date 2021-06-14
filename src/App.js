@@ -12,6 +12,7 @@ import Categories from './components/pages/Categories';
 import CategoryContextProvider from './contexts/category/CategoryContext';
 import AuthContextProvider from './contexts/auth/AuthContext';
 import setAuthToken from './utils/setAuthToken';
+import PrivateRoute from './components/routing/PrivateRoute';
 
 if(localStorage.token) {
   setAuthToken(localStorage.token)
@@ -30,8 +31,8 @@ function App() {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
-                <Route exact path="/records" component={Records} />
-                <Route exact path="/categories" component={Categories} />
+                <PrivateRoute exact path="/records" component={Records} />
+                <PrivateRoute exact path="/categories" component={Categories} />
               </Switch>
             </Router>
           </RecordContextProvider>

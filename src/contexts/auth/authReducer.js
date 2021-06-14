@@ -1,4 +1,4 @@
-import { REGISTER_USER, REGISTER_FAIL, CLEAR_REGISTER_ERROR, LOAD_USER_ERROR, LOAD_USER, LOGIN_USER, LOGIN_USER_FAIL } from "../types";
+import { REGISTER_USER, REGISTER_FAIL, CLEAR_REGISTER_ERROR, LOAD_USER_ERROR, LOAD_USER, LOGIN_USER, LOGIN_USER_FAIL, LOGOUT_USER } from "../types";
 
 export default function(state,action) {
     switch (action.type) {
@@ -12,21 +12,21 @@ export default function(state,action) {
                 isLoading: false
             }
         case LOAD_USER:
-            console.log("load")
-            console.log(action.payload)
             return {
                 ...state,
-                ...action.payload
+                ...action.payload,
+                isAuthenticated: true
             }
         case REGISTER_FAIL:
         case LOAD_USER_ERROR:
         case LOGIN_USER_FAIL:
+        case LOGOUT_USER:
             localStorage.removeItem("token")
             return {
                 ...state,
                 token: null,
                 user: null,
-                isLoading: true,
+                isLoading: false,
                 isAuthenticated: false,
                 error: action.payload
             }
