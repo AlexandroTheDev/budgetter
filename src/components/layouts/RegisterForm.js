@@ -1,11 +1,16 @@
+import { useEffect } from "react"
 import { useContext } from "react"
 import { useState } from "react"
 import { Form, Button, Col } from "react-bootstrap"
+import { useHistory } from "react-router-dom"
 import { AlertContext } from "../../contexts/alert/AlertContext"
+import { AuthContext } from "../../contexts/auth/AuthContext"
 
 export default function RegisterForm() {
 
     const {setAlert} = useContext(AlertContext)
+    const {register, error, clearError, isAuthenticated} = useContext(AuthContext)
+    const history = useHistory()
 
     const [credentials, setCredentials] = useState({
         firstName: "",
@@ -14,6 +19,18 @@ export default function RegisterForm() {
         password: "",
         confirmPassword: ""
     })
+
+    useEffect(()=>{
+        if (error== "Email address already in use"){
+            setAlert(error, 'danger')
+            clearError()
+        }
+        if(isAuthenticated) {
+            console.log("test")
+            setAlert('Registration successfull','success')
+            history.push('/')
+        }
+    },[error,isAuthenticated])
 
     const {firstName, lastName, email, password, confirmPassword } = credentials
 
@@ -25,6 +42,8 @@ export default function RegisterForm() {
             setAlert("Password must be atlease 8 characters","danger")
         } else if( password !== confirmPassword) {
             setAlert("Passwords should matched", "danger")
+        } else {
+            register(credentials)
         }
 
     }
