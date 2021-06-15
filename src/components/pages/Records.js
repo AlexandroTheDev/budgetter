@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Container, Row, Col, Card, Button, Modal } from 'react-bootstrap'
-import CategoryForm from '../layouts/CategoryForm';
+import { Container, Row, Col } from 'react-bootstrap'
+import RecordForm from '../layouts/RecordForm';
 
 export default function Records() {
 
@@ -18,50 +18,16 @@ export default function Records() {
         <>
         <Container>
             <Row>
-                <Col>
-                    <Card onClick={handleShowCategoryForm}>
-                        <Card.Body>
-                            <i className="las la-plus-circle"></i> Add Category
-                        </Card.Body>
-                    </Card>
+                <Col xs="12" md="8" lg="9">
+                    test
                 </Col>
-
-                <Col>
-                    <Card onClick={handleShowEntryForm}>
-                        <Card.Body>
-                            <i className="las la-plus-circle"></i> Add Entry
-                        </Card.Body>
-                    </Card>
+                <Col xs="12" md="4" lg="3">
+                    <h2 className="text-center">Add New Record</h2>
+                    <RecordForm />
                 </Col>
-            </Row>  
+            </Row>
         </Container>
-        {/* Add Category Modal */}
-        <Modal show={showCategoryForm} onHide={handleCloseCategoryForm}>
-            <Modal.Header closeButton>
-                <Modal.Title>Add Category</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <CategoryForm />
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleCloseCategoryForm}>
-                    Close
-                </Button>
-            </Modal.Footer>
-        </Modal>
-        <Modal show={showEntryForm} onHide={handleCloseEntryForm}>
-            <Modal.Header closeButton>
-                <Modal.Title>Add Entry</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                {/* <EntryForm /> */} test
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleCloseEntryForm}>
-                    Close
-                </Button>
-            </Modal.Footer>
-        </Modal>
+       
         </>
 
     )

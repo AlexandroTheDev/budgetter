@@ -1,6 +1,7 @@
 import React from 'react'
 import { useContext } from 'react'
 import { AlertContext } from '../../contexts/alert/AlertContext'
+import { Container } from 'react-bootstrap'
 
 export default function Alert() {
 
@@ -8,9 +9,11 @@ export default function Alert() {
 
     return (
         alerts.length !== 0 && alerts.map( alert=> (
-            <div key={alert.id} className={`alert alert-${alert.type}`}>
-                {alert.message}
-            </div>
+            <Container>
+                <div key={alert.id} className={`alert alert-${alert.type}`}>
+                    {alert.message}
+                </div>
+            </Container>
         ))
     )
 }

@@ -6,7 +6,8 @@ export default function CategoryListItem({ category }) {
     const { setCurrentCategory} = useContext(CategoryContext)
 
     const handleClick = () =>{
-        setCurrentCategory(category.id)
+        console.log(category._id)
+        setCurrentCategory(category._id)
     }
 
     return (

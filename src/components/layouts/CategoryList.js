@@ -1,20 +1,32 @@
 import { CategoryContext } from '../../contexts/category/CategoryContext'
 import { useContext } from 'react'
 import CategoryListItem from './CategoryListItem'
+import { useEffect } from 'react'
+import { Spinner } from 'react-bootstrap'
 
 export default function CategoryList() {
 
     
-    const {categories} = useContext(CategoryContext)
+    const {categories, getCategories, isLoading} = useContext(CategoryContext)
 
-    const displayCategories = categories.map( category => (
-        <CategoryListItem key={category.id} category={category} />
+    useEffect(() => {
+        getCategories()
+    },[])
+
+    const displayCategories = categories === null || categories.length === 0 ? "No Categories Found" : categories.map( category => (
+        <CategoryListItem key={category._id} category={category} />
     ))
     
     return (
         <>
             <div className="d-flex flex-wrap">
-                {displayCategories}
+                { isLoading ? 
+                    <>
+                    <Spinner animation="border" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </Spinner> Loading
+                    </>
+                : displayCategories}
             </div>
         </>
     )
