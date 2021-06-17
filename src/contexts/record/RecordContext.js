@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useReducer } from "react";
 import { createContext } from "react";
-import { ADD_RECORD, CLEAR_CURRENT_RECORD, EDIT_RECORD, GET_RECORDS, RECORD_ERROR, SET_CURRENT_RECORD, SET_RECORD_LOADING } from "../types";
+import { ADD_RECORD, CLEAR_CURRENT_RECORD, DELETE_RECORD, EDIT_RECORD, GET_RECORDS, RECORD_ERROR, SET_CURRENT_RECORD, SET_RECORD_LOADING } from "../types";
 import recordReducer from "./recordReducer";
 
 export const RecordContext = createContext()
@@ -104,6 +104,21 @@ export default function RecordContextProvider(props) {
         })
     }
 
+    // Delete Record
+    const deleteRecord = record => {
+        setLoading()
+        axios.delete(`${process.env.REACT_APP_BE}/api/records/${record._id}`)
+        .then( res => {
+            getRecords()
+        })
+        .catch( err => {
+            dispatch({
+                type: RECORD_ERROR,
+                payload: err.response.data.error.message
+            })
+        })
+    }
+
     return(
         <RecordContext.Provider value={{
             records: state.records,
@@ -113,7 +128,8 @@ export default function RecordContextProvider(props) {
             setCurrentRecord,
             currentRecord : state.current,
             clearCurrentRecord,
-            updateRecord
+            updateRecord,
+            deleteRecord
         }}>
             {props.children}
         </RecordContext.Provider>

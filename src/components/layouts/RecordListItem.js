@@ -5,12 +5,16 @@ import numberPriceFormat from "../../utils/numberPriceFormat"
 
 export default function RecordListItem({record,handleShow}) {
 
-    const { setCurrentRecord } = useContext(RecordContext)
+    const { setCurrentRecord, deleteRecord } = useContext(RecordContext)
 
 
     const handleEdit = () => {
         setCurrentRecord(record)
         handleShow()
+    }
+
+    const handleDelete = () => {
+        deleteRecord(record)
     }
 
     return (
@@ -26,7 +30,7 @@ export default function RecordListItem({record,handleShow}) {
                 <Button variant="outline-warning" size="sm"  onClick={handleEdit}>
                     <i className="las la-edit"></i>
                 </Button>{" "}
-                <Button variant="outline-danger" size="sm">
+                <Button variant="outline-danger" size="sm" onClick={handleDelete}>
                     <i className="las la-trash"></i>
                 </Button>
             </td>

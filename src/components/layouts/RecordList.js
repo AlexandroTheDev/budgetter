@@ -38,7 +38,7 @@ export default function RecordList() {
                     </tr>
                 </thead>
                 <tbody>
-                        {records.length > 0 ?displayRecords : <tr><td colSpan="4">No Records Found</td></tr>}
+                        {records.length > 0 ?displayRecords : <tr><td colSpan="5">No Records Found</td></tr>}
                 </tbody>
             </Table>
             { currentRecord && <RecordEditForm show={show} handleClose={handleClose}/> }
