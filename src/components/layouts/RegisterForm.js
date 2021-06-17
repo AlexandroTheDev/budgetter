@@ -21,7 +21,7 @@ export default function RegisterForm() {
     })
 
     useEffect(()=>{
-        if (error== "Email address already in use"){
+        if (error === "Email address already in use"){
             setAlert(error, 'danger')
             clearError()
         }
@@ -29,6 +29,8 @@ export default function RegisterForm() {
             setAlert('Registration successfull','success')
             history.push('/')
         }
+
+        // eslint-disable-next-line
     },[error,isAuthenticated])
 
     const {firstName, lastName, email, password, confirmPassword } = credentials

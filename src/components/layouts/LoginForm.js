@@ -35,6 +35,8 @@ export default function LoginForm() {
             setAlert(error, 'danger')
         }
         clearError()
+        
+        // eslint-disable-next-line
     }, [error,isAuthenticated])
 
     return (

@@ -1,5 +1,7 @@
+import axios from "axios";
 import { useReducer } from "react";
 import { createContext } from "react";
+import { ADD_RECORD, CLEAR_CURRENT_RECORD, EDIT_RECORD, GET_RECORDS, RECORD_ERROR, SET_CURRENT_RECORD, SET_RECORD_LOADING } from "../types";
 import recordReducer from "./recordReducer";
 
 export const RecordContext = createContext()
@@ -7,51 +9,111 @@ export const RecordContext = createContext()
 export default function RecordContextProvider(props) {
 
     const initialState = {
-        records : [
-            {
-                id: 1,
-                category: "House",
-                type: "income",
-                amount: 300
-            },
-            {
-                id: 2,
-                category: "Part-Time",
-                type: "income",
-                amount: 869
-            },
-            {
-                id: 3,
-                category: "Rent",
-                type: "income",
-                amount: 1599
-            },
-            {
-                id: 4,
-                category: "Water",
-                type: "expense",
-                amount: 100
-            },
-            {
-                id: 5,
-                category: "Electricity",
-                type: "expense",
-                amount: 334
-            },
-            {
-                id: 6,
-                category: "Internet",
-                type: "expense",
-                amount: 1599
-            },
-        ]
+        records : [],
+        error: null,
+        isLoading: true
     }
 
     const [state, dispatch] = useReducer(recordReducer, initialState)
 
+    // Add Record
+    const addRecord = record => {
+        setLoading()
+        const config = {
+            headers : {
+                "Content-Type" : "application/json"
+            }
+        }
+        axios.post(`${process.env.REACT_APP_BE}/api/records`,record, config)
+        .then(res => {
+            dispatch({
+                type: ADD_RECORD,
+                payload: res.data
+            })
+        })
+        .catch( err => {
+            dispatch({
+                type: RECORD_ERROR,
+                payload: err.response.data.error.message
+            })
+        })
+    }
+
+    // Get Records
+    const getRecords = () => {
+        setLoading()
+        axios.get(`${process.env.REACT_APP_BE}/api/records`)
+        .then( res => {
+            dispatch({
+                type: GET_RECORDS,
+                payload: res.data
+            })
+        })
+        .catch( err => {
+            console.log(err.response)
+            dispatch({
+                type: RECORD_ERROR,
+                payload: err.response.data.error.message
+            })
+        })
+    }
+
+    // Set Loading
+    const setLoading = () => {
+        dispatch({
+            type: SET_RECORD_LOADING
+        })
+    }
+
+    // Set Current
+    const setCurrentRecord = record => {
+        dispatch({
+            type: SET_CURRENT_RECORD,
+            payload: record
+        })
+    }
+
+    const clearCurrentRecord = () => {
+        dispatch({
+            type: CLEAR_CURRENT_RECORD
+        })
+    }
+
+    // Update Record
+    const updateRecord = record => {
+        setLoading()
+        const config = {
+            headers: {
+                "Content-Type" :"application/json"
+            }
+        }
+        axios.put(`${process.env.REACT_APP_BE}/api/records/${state.current._id}`,record, config)
+        .then( res => {
+            dispatch({
+                type: EDIT_RECORD,
+                payload: res.data
+            })
+            clearCurrentRecord()
+        })
+        .catch( err => {
+            console.log( err.response.data)
+            dispatch({
+                type: RECORD_ERROR,
+                payload: err.response.data.error.message
+            })
+        })
+    }
+
     return(
         <RecordContext.Provider value={{
-            records: state.records
+            records: state.records,
+            addRecord,
+            getRecords,
+            isLoading: state.isLoading,
+            setCurrentRecord,
+            currentRecord : state.current,
+            clearCurrentRecord,
+            updateRecord
         }}>
             {props.children}
         </RecordContext.Provider>

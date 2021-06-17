@@ -1,7 +1,6 @@
 import { useReducer } from "react";
 import { createContext } from "react";
 import categoryReducer from "./categoryReducer";
-import { v4 as uuid } from 'uuid'
 import { ADD_CATEGORY, CATEGORY_ERROR, CLEAR_CURRENT_CATEGORY, DELETE_CATEGORY, EDIT_CATEGORY, GET_CATEGORIES, SET_CURRENT_CATEGORY, SET_LOADING } from "../types";
 import axios from "axios";
 
@@ -21,7 +20,6 @@ export default function CategoryContextProvider(props) {
     const getCategories = () => {
         axios.get(`${process.env.REACT_APP_BE}/api/categories`)
         .then( res => {
-            console.log("Test")
             dispatch({
                 type: GET_CATEGORIES,
                 payload: res.data

@@ -11,6 +11,8 @@ export default function CategoryList() {
 
     useEffect(() => {
         getCategories()
+
+        // eslint-disable-next-line
     },[])
 
     const displayCategories = categories === null || categories.length === 0 ? "No Categories Found" : categories.map( category => (
