@@ -89,11 +89,8 @@ export default function RecordContextProvider(props) {
         }
         axios.put(`${process.env.REACT_APP_BE}/api/records/${state.current._id}`,record, config)
         .then( res => {
-            dispatch({
-                type: EDIT_RECORD,
-                payload: res.data
-            })
             clearCurrentRecord()
+            getRecords()
         })
         .catch( err => {
             console.log( err.response.data)

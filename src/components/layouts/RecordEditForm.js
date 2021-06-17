@@ -1,6 +1,7 @@
 import moment from "moment"
 import { useContext, useState } from "react"
 import { Modal, Button, Form, InputGroup } from "react-bootstrap"
+import { AlertContext } from "../../contexts/alert/AlertContext"
 import { CategoryContext } from "../../contexts/category/CategoryContext"
 import { RecordContext } from "../../contexts/record/RecordContext"
 
@@ -8,6 +9,7 @@ export default function RecordEditForm({show, handleClose}) {
 
     const { isLoading, categories } = useContext(CategoryContext)
     const { currentRecord, updateRecord } = useContext(RecordContext)
+    const { setAlert } = useContext(AlertContext)
     
     
     const [updatedRecord, setUpdatedRecord] = useState({
@@ -27,8 +29,12 @@ export default function RecordEditForm({show, handleClose}) {
 
     const handleSubmit = e => {
         e.preventDefault()
-        if ( updatedRecord.type)
-        updateRecord(updatedRecord)
+        if( !isNaN(updatedRecord.amount)){
+            updateRecord(updatedRecord)
+        } else {
+            setAlert("Amount should be a number","danger")
+            handleClose()
+        }
     }
 
     return (

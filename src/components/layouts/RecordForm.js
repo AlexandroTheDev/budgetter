@@ -3,14 +3,16 @@ import { useContext } from "react"
 import { Form, InputGroup, Button } from "react-bootstrap"
 import { RecordContext } from "../../contexts/record/RecordContext"
 import { CategoryContext } from "../../contexts/category/CategoryContext"
+import { AlertContext } from "../../contexts/alert/AlertContext"
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
 import moment from "moment"
 
 export default function RecordForm() {
 
-    const { addRecord, isLoading: recordIsLoading, currentRecord } = useContext(RecordContext)
+    const { addRecord, isLoading: recordIsLoading } = useContext(RecordContext)
     const { categories, isLoading, getCategories } = useContext(CategoryContext)
+    const { setAlert } = useContext(AlertContext)
     const [record, setRecord] = useState({
         amount: 0,
         date: new Date().toLocaleString([],{year: 'numeric', month: 'numeric', day: 'numeric'}),
@@ -32,8 +34,9 @@ export default function RecordForm() {
         e.preventDefault()
         if(!isNaN(record.amount)){
             addRecord(record)
+        } else {
+            setAlert("Amount should be a number","danger")
         }
-        console.log(recordIsLoading)
     }
 
     return (
@@ -47,18 +50,18 @@ export default function RecordForm() {
                     <InputGroup.Prepend>
                         <InputGroup.Text id="basic-addon1">&#8369;</InputGroup.Text>
                     </InputGroup.Prepend>
-                    <Form.Control onChange={handleChange} value={currentRecord ? currentRecord.amount : record.amount} onFocus={ e => e.target.select()} required />
+                    <Form.Control onChange={handleChange} value={record.amount} onFocus={ e => e.target.select()} required />
                 </InputGroup>
             </Form.Group>
 
             <Form.Group controlId="date">
                 <Form.Label>Date:</Form.Label>
-                <Form.Control type="date" onChange={handleChange} value={currentRecord ? moment(currentRecord.date).format('YYYY-MM-DD'): moment(record.date).format('YYYY-MM-DD')} required />
+                <Form.Control type="date" onChange={handleChange} value={moment(record.date).format('YYYY-MM-DD')} required />
             </Form.Group>
 
             <Form.Group controlId="category">
                 <Form.Label>Category:</Form.Label>
-                <Form.Control as="select" onChange={handleChange} value={ currentRecord ? currentRecord.category : record.category} required>
+                <Form.Control as="select" onChange={handleChange} value={record.category} required>
                     <option value="" disabled>Select</option>
                     {!isLoading && displayCategories}
                 </Form.Control>
@@ -66,7 +69,7 @@ export default function RecordForm() {
 
             <Form.Group controlId="type">
                 <Form.Label>Type:</Form.Label>
-                <Form.Control as="select"onChange={handleChange} value={currentRecord ? currentRecord.type : record.type} required>
+                <Form.Control as="select"onChange={handleChange} value={record.type} required>
                     <option value="expense">Expense</option>
                     <option value="income">Income</option>
                 </Form.Control>
