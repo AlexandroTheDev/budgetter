@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { Navbar, Nav } from 'react-bootstrap'
+import { Navbar, Nav, Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../contexts/auth/AuthContext'
 
@@ -13,7 +13,7 @@ export default function MainNavbar() {
 
     const authRightLinks = (
         <>
-            <Nav.Link>Hello, { user && user.firstName}</Nav.Link>
+            {/* <Nav.Link>Hello, { user && user.firstName}</Nav.Link> */}
             <Nav.Link onClick={onLogout}><i className="las la-sign-out-alt"></i> Logout</Nav.Link>
         </>
     )
@@ -31,15 +31,17 @@ export default function MainNavbar() {
     )
     
     return (
-        <Navbar expand="md">
-            <Navbar.Brand to="/" as={Link}>Budgetter</Navbar.Brand>
-            <Navbar.Toggle />
-            <Navbar.Collapse>
-                { isAuthenticated && authLeftLinks}
-                <Nav className="ml-auto">
-                    { isAuthenticated ? authRightLinks : guestRightLinks}
-                </Nav>
-            </Navbar.Collapse>
+        <Navbar expand="md" className="navbar-dark bg-primary shadow mb-4">
+            <Container fluid>
+                <Navbar.Brand to="/" as={Link}>Budgetter</Navbar.Brand>
+                <Navbar.Toggle />
+                <Navbar.Collapse>
+                    { isAuthenticated && authLeftLinks}
+                    <Nav className="ms-auto">
+                        { isAuthenticated ? authRightLinks : guestRightLinks}
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
         </Navbar>
     )
 }

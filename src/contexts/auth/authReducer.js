@@ -15,7 +15,8 @@ export default function(state,action) {
             return {
                 ...state,
                 ...action.payload,
-                isAuthenticated: true
+                isAuthenticated: true,
+                isLoading: false
             }
         case REGISTER_FAIL:
         case LOAD_USER_ERROR:

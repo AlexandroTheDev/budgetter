@@ -63,7 +63,9 @@ export default function LoginForm() {
                     />
             </Form.Group>
 
-            <Button type="submit" block>Register</Button>
+            <div className="d-grid">
+                <Button type="submit" className="mt-3 text-center" block>Login</Button>
+            </div>
         </Form>
     )
 }

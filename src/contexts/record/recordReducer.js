@@ -1,4 +1,4 @@
-import { ADD_RECORD, CLEAR_CURRENT_RECORD, DELETE_RECORD, EDIT_RECORD, GET_RECORDS, SET_CURRENT_RECORD, SET_RECORD_LOADING } from "../types";
+import { ADD_RECORD, CLEAR_CURRENT_RECORD, DELETE_RECORD, EDIT_RECORD, GET_RECORDS, RECORD_ERROR, SET_CURRENT_RECORD, SET_RECORD_LOADING } from "../types";
 
 export default function(state,action) {
     switch (action.type) {
@@ -40,6 +40,12 @@ export default function(state,action) {
                 ...state,
                 records : state.records.filter( record => record._id !== action.payload._id),
                 isLoading: false
+            }
+        case RECORD_ERROR: 
+        
+            return {
+                ...state,
+                isLoading : false
             }
         default:
             return state
