@@ -50,7 +50,7 @@ export default function RecordContextProvider(props) {
             })
         })
         .catch( err => {
-            console.log(err.response)
+            console.log(err)
             dispatch({
                 type: RECORD_ERROR,
                 payload: err.response.data.error.message
