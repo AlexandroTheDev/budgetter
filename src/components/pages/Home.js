@@ -9,6 +9,7 @@ import { todaySummary } from "../../utils/datasets"
 import numberPriceFormat from "../../utils/numberPriceFormat"
 import BudgetSummary from "../layouts/BudgetSummary"
 import SummaryCard from "../layouts/SummaryCard"
+import Loading from "../layouts/Loading"
 
 export default function Home() {
     const { records, isLoading, getRecords } = useContext(RecordContext)
@@ -27,14 +28,13 @@ export default function Home() {
     },[records])
 
     useEffect(() => {
-        console.log("test")
         getRecords()
     }, [])
 
     return (
         !isAuthenticated && !isLoading? <Redirect to="/login" /> :
         isLoading ?
-        <><Spinner animation="border"></Spinner> Loading </>
+        <><Loading /></>
         :
         <Container>
             <Row>
@@ -65,7 +65,7 @@ export default function Home() {
                 </Col>
             </Row>
             <Row>
-                <Col xs="12" md="8" className="mb-3">
+                <Col xs="12" md="8" className="mb-3 order-1 order-md-0">
                     <Card className="shadow p-1">
                         <BudgetSummary />
                     </Card>

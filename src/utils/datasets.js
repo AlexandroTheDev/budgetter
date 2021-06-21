@@ -20,7 +20,7 @@ export const totalEachDayOfMonth = (year,month,records, type) => {
         let currentDayRecords = records.filter( record => {
             // console.log(moment(record.date).format('M'),day)
             // console.log(day, moment(record.date).format('M'), moment(new Date).format('M') )
-            console.log(day, moment(record.date).format('D'))
+            // console.log(day, moment(record.date).format('D'))
            return  moment(record.date).format('M') == moment(new Date).format('M') && record.type == type && moment(record.date).format('D') == day
         })
         return currentDayRecords.reduce((x,y) =>x+y.amount,0)

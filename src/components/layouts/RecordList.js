@@ -5,6 +5,7 @@ import { Table, Spinner } from 'react-bootstrap'
 import { RecordContext } from '../../contexts/record/RecordContext'
 import RecordEditForm from './RecordEditForm'
 import RecordListItem from './RecordListItem'
+import Loading from './Loading'
 
 export default function RecordList() {
 
@@ -27,26 +28,26 @@ export default function RecordList() {
     return (
         
         !isLoading ? <>
-            <Table striped bordered hover size="sm" className="text-center" >
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Amount</th>
-                        <th>Category</th>
-                        <th>Type</th>
-                        <th>Option</th>
-                    </tr>
-                </thead>
-                <tbody>
-                        {records.length > 0 ?displayRecords : <tr><td colSpan="5">No Records Found</td></tr>}
-                </tbody>
-            </Table>
+            <div className="shadow rounded bg-white pt-3 pb-1">
+                <Table striped hover size="sm" className="text-center " >
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Category</th>
+                            <th>Type</th>
+                            <th>Option</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            {records.length > 0 ?displayRecords : <tr><td colSpan="5">No Records Found</td></tr>}
+                    </tbody>
+                </Table>
+            </div>
             { currentRecord && <RecordEditForm show={show} handleClose={handleClose}/> }
         </> :
         <>
-            <Spinner animation="border" role="status">
-                <span className="sr-only">Loading...</span>
-            </Spinner> Loading
+            <Loading />
         </>
     )
 }

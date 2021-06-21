@@ -11,7 +11,7 @@ export default function CategoryListItem({ category }) {
     }
 
     return (
-        <div className="border rounded-pill py-2 px-3 mb-1 mx-1" onClick={handleClick}>
+        <div className="border rounded-pill py-2 px-3 mb-1 mx-1 bg-light shadow category-pill" onClick={handleClick}>
             <span className="d-flex align-items-center">
                 <span>{category.name}</span> <i className="las la-edit ml-2" style={{fontSize: "1.5rem"}}></i>
             </span>

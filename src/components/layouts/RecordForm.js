@@ -43,7 +43,8 @@ export default function RecordForm() {
         categories.length  === 0 ? <>
         No categories found, Please add categories {<Button to="/categories" as={Link}>here</Button>}
         </> :
-        <Form onSubmit={handleSubmit}>         
+        <Form onSubmit={handleSubmit} className="shadow p-3 bg-white rounded">         
+            <h2 className="text-center">Add New Record</h2>
             <Form.Group controlId="amount">
                 <Form.Label>Amount:</Form.Label>
                 <InputGroup>
@@ -74,9 +75,12 @@ export default function RecordForm() {
                     <option value="income">Income</option>
                 </Form.Control>
             </Form.Group>
-            { recordIsLoading ? <Button type="submit" block disabled> <i className="las la-plus-circle"></i> Record</Button> : 
-            <Button type="submit" block> <i className="las la-plus-circle"></i> Record</Button>
-             }
+            <div className="d-grid">
+
+                { recordIsLoading ? <Button type="submit" block disabled> <i className="las la-plus-circle"></i> Record</Button> : 
+                    <Button type="submit" block> <i className="las la-plus-circle"></i> Record</Button>
+                }
+        </div>
         </Form>
     )
 }

@@ -37,7 +37,7 @@ export default function CategoryForm() {
     }
 
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} className="shadow px-3 py-4 rounded bg-light">
             <h3>{ !currentCategory ? "Create" : "Update"} Category</h3>
             <Form.Group controlId="name">
                 <Form.Label>Name:</Form.Label>
@@ -48,14 +48,17 @@ export default function CategoryForm() {
                     onFocus={e => e.target.select()}
                 />
             </Form.Group>
-            { !currentCategory 
-                ? <Button type="submit" block disabled={isLoading? true: false}><i className="las la-plus-circle"></i> Create Category</Button>
-                : <>
-                    <Button type="submit" variant="warning" block disabled={isLoading? true: false}><i className="las la-edit"></i> Update Category</Button>
-                    <Button variant="danger" block onClick={handleDeleteCategory} disabled={isLoading? true: false}><i className="las la-trash"></i> Delete Category</Button>
-                    <Button variant="secondary" block onClick={handleCancelEdit}  disabled={isLoading? true: false}><i className="las la-arrow-alt-circle-left"></i> Cancel Edit Category</Button>
-                </>
-            }
+            <div className="d-grid gap-2">
+
+                { !currentCategory 
+                    ? <Button type="submit" block disabled={isLoading? true: false}><i className="las la-plus-circle"></i> Create Category</Button>
+                    : <>
+                        <Button type="submit" variant="warning" block disabled={isLoading? true: false}><i className="las la-edit"></i> Update Category</Button>
+                        <Button variant="danger" block onClick={handleDeleteCategory} disabled={isLoading? true: false}><i className="las la-trash"></i> Delete Category</Button>
+                        <Button variant="secondary" block onClick={handleCancelEdit}  disabled={isLoading? true: false}><i className="las la-arrow-alt-circle-left"></i> Cancel Edit Category</Button>
+                    </>
+                }
+            </div>
         </Form>
     )
 }

@@ -37,6 +37,8 @@ $dark: #342e37;
 $font-family-sans-serif: 'Karla', sans-serif;
 $border-radius: 1rem;
 
+$table-striped-bg: rgba($primary, 0.2);
+
 $box-shadow: 0.5rem 0.5rem 1rem rgba($black, 0.15) !default;
 @import '~bootstrap/scss/bootstrap';
 
@@ -52,4 +54,24 @@ h4,
 h5,
 h6 {
   font-family: 'Rubik', sans-serif;
+}
+
+.input-group-text {
+  border-radius: 1rem 0 0 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.category-pill:hover {
+  cursor: pointer;
+  background-color: $primary;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
 }

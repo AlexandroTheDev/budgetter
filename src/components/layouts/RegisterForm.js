@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useContext } from "react"
 import { useState } from "react"
-import { Form, Button, Col } from "react-bootstrap"
+import { Form, Button, Col, Row } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
 import { AlertContext } from "../../contexts/alert/AlertContext"
 import { AuthContext } from "../../contexts/auth/AuthContext"
@@ -9,7 +9,7 @@ import { AuthContext } from "../../contexts/auth/AuthContext"
 export default function RegisterForm() {
 
     const {setAlert} = useContext(AlertContext)
-    const {register, error, clearError, isAuthenticated} = useContext(AuthContext)
+    const {register, error, clearError, isAuthenticated, isLoading} = useContext(AuthContext)
     const history = useHistory()
 
     const [credentials, setCredentials] = useState({
@@ -50,8 +50,8 @@ export default function RegisterForm() {
     }
 
     return (
-        <Form onSubmit={handleSubmit}>
-
+        <Form onSubmit={handleSubmit} className="bg-white shadow rounded px-2 py-3 px-md-3 py-md-5 mb-3">
+            <h1 className="text-center">Account <span className="text-primary">Register</span></h1>
             <Form.Group controlId="firstName">
                 <Form.Label>First Name:</Form.Label>
                 <Form.Control 
@@ -79,7 +79,7 @@ export default function RegisterForm() {
                     required
                 />
             </Form.Group>
-            <Form.Row>
+            <Row>
                 <Col xs="12" sm="6">
                     <Form.Group controlId="password">
                         <Form.Label>Password:</Form.Label>
@@ -103,8 +103,13 @@ export default function RegisterForm() {
                     </Form.Group>
                 </Col>
             
-            </Form.Row>
-            <Button type="submit" block>Register</Button>
+            </Row>
+            {
+                !isLoading &&
+                <div className="d-grid">
+                    <Button type="submit" block>Register</Button>
+                </div>
+            }
         </Form>
     )
 }

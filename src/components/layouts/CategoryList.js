@@ -2,7 +2,7 @@ import { CategoryContext } from '../../contexts/category/CategoryContext'
 import { useContext } from 'react'
 import CategoryListItem from './CategoryListItem'
 import { useEffect } from 'react'
-import { Spinner } from 'react-bootstrap'
+import Loading from './Loading'
 
 export default function CategoryList() {
 
@@ -20,16 +20,12 @@ export default function CategoryList() {
     ))
     
     return (
-        <>
-            <div className="d-flex flex-wrap">
-                { isLoading ? 
-                    <>
-                    <Spinner animation="border" role="status">
-                        <span className="sr-only">Loading...</span>
-                    </Spinner> Loading
-                    </>
-                : displayCategories}
-            </div>
-        </>
+
+        isLoading ? 
+            <Loading />
+        : <div className="d-flex flex-wrap">
+            {displayCategories}
+        </div>
+            
     )
 }

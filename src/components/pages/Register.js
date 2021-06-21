@@ -6,9 +6,6 @@ export default function Register() {
     return (
         <Container>
             <Row>
-                <Col xs="12">
-                    <h1 className="text-center">Account Registration</h1>
-                </Col>
                 <Col xs="12" sm="10" md="8" lg="6" className="mx-auto">
                     <RegisterForm />
                 </Col>

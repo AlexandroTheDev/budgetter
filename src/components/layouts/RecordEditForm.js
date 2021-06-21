@@ -39,7 +39,7 @@ export default function RecordEditForm({show, handleClose}) {
 
     return (
         <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
+                <Modal.Header>
                     <Modal.Title>Edit Record</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -81,9 +81,13 @@ export default function RecordEditForm({show, handleClose}) {
                         </Form.Control>
                     </Form.Group>
 
-                    <Button  type="submit" variant="primary">
-                        Save Changes
-                    </Button>
+                    <div className="d-grid gap-2">
+                        <Button  type="submit" variant="primary" >
+                            Save Changes
+                        </Button>
+
+                        <Button variant="secondary" onClick={handleClose}>Cancel Edit</Button>
+                    </div>
                     </Form>
                 </Modal.Body>
             </Modal>

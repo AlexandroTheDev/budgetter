@@ -40,8 +40,8 @@ export default function LoginForm() {
     }, [error,isAuthenticated])
 
     return (
-        <Form onSubmit={handleSubmit}>
-
+        <Form onSubmit={handleSubmit} className="mb-3 px-3 py-4">
+            <h1 className="text-center">Account <span className="text-primary">Login</span></h1>
             <Form.Group controlId="email">
                 <Form.Label>Email:</Form.Label>
                 <Form.Control 
