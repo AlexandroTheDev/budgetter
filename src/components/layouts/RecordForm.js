@@ -7,6 +7,7 @@ import { AlertContext } from "../../contexts/alert/AlertContext"
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
 import moment from "moment"
+import CategoryForm from "./CategoryForm"
 
 export default function RecordForm() {
 
@@ -41,7 +42,10 @@ export default function RecordForm() {
 
     return (
         categories.length  === 0 ? <>
-        No categories found, Please add categories {<Button to="/categories" as={Link}>here</Button>}
+        <div className=" alert alert-info shadow">
+            No categories found, Please add categories {<Button to="/categories" as={Link}>here</Button>} or Use the form below.
+        </div>
+        <CategoryForm />
         </> :
         <Form onSubmit={handleSubmit} className="shadow p-3 bg-white rounded">         
             <h2 className="text-center">Add New Record</h2>
